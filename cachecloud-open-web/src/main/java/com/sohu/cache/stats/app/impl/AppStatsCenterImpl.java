@@ -258,6 +258,7 @@ public class AppStatsCenterImpl implements AppStatsCenter {
      */
     @Override
     public AppDetailVO getAppDetail(long appId) {
+        // TODO-FOX redis app info
         AppDesc appDesc = appDao.getAppDescById(appId);
         if (appDesc == null) {
             return null;
@@ -265,6 +266,8 @@ public class AppStatsCenterImpl implements AppStatsCenter {
         AppDetailVO resultVO = new AppDetailVO();
         resultVO.setAppDesc(appDesc);
         Set<String> machines = new HashSet<String>();
+
+        // TODO-FOX redis instance info
         List<InstanceInfo> instanceList = instanceDao.getInstListByAppId(appId);
 
         if (instanceList == null || instanceList.isEmpty()) {
@@ -274,6 +277,8 @@ public class AppStatsCenterImpl implements AppStatsCenter {
         long miss = 0L;
         long allUsedMemory = 0L;
         long allMaxMemory = 0L;
+
+        // TODO-FOX redis instance statistic info
         List<InstanceStats> instanceStatsList = instanceStatsDao.getInstanceStatsByAppId(appId);
         if(instanceStatsList != null && instanceStatsList.size() > 0){
             Map<Long, InstanceStats> instanceStatMap = new HashMap<Long, InstanceStats>();
@@ -313,6 +318,7 @@ public class AppStatsCenterImpl implements AppStatsCenter {
             }
         }
 
+        // TODO-FOX app_to_user
         List<AppUser> userList = userService.getByAppId(appId);
         if (userList != null && userList.size() > 0) {
             resultVO.setAppUsers(userList);
